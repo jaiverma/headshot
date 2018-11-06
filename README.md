@@ -5,10 +5,10 @@ Trainer(aimbot and esp) for Assault Cube on macOS
 
 Usage:
 ```bash
-cd frida_trainer
-python ac_trainer.py <pid of assaultcube>
+$ cd frida_trainer
+$ python ac_trainer.py <pid of assaultcube>
 
- python ac_trainer.py `pidof assaultcube`
+$ python ac_trainer.py `pidof assaultcube`
 
 
 ****************************
@@ -22,3 +22,7 @@ python ac_trainer.py <pid of assaultcube>
 
 >
 ```
+
+- The native trainer is written in C++ and uses the mach_vm API
+
+The native implelemtation requires task_for_pid and must be run as root.
