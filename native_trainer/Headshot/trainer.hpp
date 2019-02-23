@@ -35,7 +35,7 @@ public:
     void set_clip(unsigned int);
     void set_ammo(unsigned int);
     void aimbot();
-    char* prepare_shellcode(uintptr_t code_addr, uintptr_t traceresult_addr, uintptr_t player_addr, std::tuple<float, float, float> pos_p, std::tuple<float, float, float> pos_q);
+    char* prepare_shellcode(uintptr_t);
 };
 
 #endif /* trainer_hpp */
