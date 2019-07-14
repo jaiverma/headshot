@@ -12,6 +12,9 @@
 #include "constants.hpp"
 #include "mem.hpp"
 #include "player.hpp"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 class Trainer {
 private:
@@ -19,6 +22,7 @@ private:
     task_t task;
     Player self = NULL;
     std::vector<Player> enemies;
+    unsigned int capture;
     Constants constants;
 
 public:
@@ -36,6 +40,7 @@ public:
     void set_ammo(unsigned int);
     void aimbot();
     char* prepare_shellcode(uintptr_t);
+    void capture_5_s();
 };
 
 #endif /* trainer_hpp */

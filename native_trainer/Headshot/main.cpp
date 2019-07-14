@@ -7,12 +7,12 @@
 //
 
 #include <iostream>
+#include <sstream>
 
 #include "mem.hpp"
 #include "constants.hpp"
 #include "player.hpp"
 #include "trainer.hpp"
-#include <sstream>
 
 int main(int argc, const char * argv[]) {
     pid_t pid = pid_from_name("assaultcube");

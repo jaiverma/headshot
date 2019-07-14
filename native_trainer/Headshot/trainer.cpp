@@ -10,6 +10,9 @@
 #include <cmath>
 #include <chrono>
 #include <thread>
+#include <fstream>
+
+json aim_data;
 
 Trainer::Trainer(int pid) {
     auto new_pid = static_cast<pid_t>(pid);
@@ -17,6 +20,9 @@ Trainer::Trainer(int pid) {
     task = task_from_pid(this->pid);
     constants = Constants();
     self = Player(constants.player_base_offset);
+    capture = 0;
+    aim_data["yaw"] = json::array();
+    aim_data["pitch"] = json::array();
     
     auto player_count = read_data<uint32_t>(task, constants.enemy_count_addr);
     
@@ -69,7 +75,19 @@ std::tuple<float, float> Trainer::calc_aim_angles(Player p, Player q) {
     auto pitch = -atan2(p_z - q_z, euclidean_dist) * 180 / M_PI;
     auto yaw = atan2(p_y - q_y, p_x - q_x) * 180 / M_PI;
 
-    return std::make_tuple(pitch, yaw - 90);
+    auto angles = std::make_tuple(pitch, yaw - 90);
+
+    if (capture < 1000) {
+        aim_data["pitch"].push_back(p.get_pitch(task));
+        aim_data["yaw"].push_back(p.get_yaw(task));
+        capture++;
+    }
+    else {
+        capture_5_s();
+        std::exit(0);
+    }
+
+    return angles;
 }
 
 char* Trainer::prepare_shellcode(uintptr_t code_addr) {
@@ -223,6 +241,7 @@ void Trainer::set_ammo(unsigned int ammo) {
 }
 
 void Trainer::aimbot() {
+
     while (true) {
         reinit();
         std::vector<Player> alive_enemies;
@@ -238,10 +257,21 @@ void Trainer::aimbot() {
                 
             });
             auto aim_angles = calc_aim_angles(self, min);
-            self.set_pitch(task, std::get<0>(aim_angles));
-            self.set_yaw(task, std::get<1>(aim_angles));
+//            self.set_pitch(task, std::get<0>(aim_angles));
+//            self.set_yaw(task, std::get<1>(aim_angles));
         }
     }
+}
+
+void Trainer::capture_5_s() {
+//    capture = true;
+//    std::this_thread::sleep_for(std::chrono::seconds(5));
+//    capture = false;
+    for (auto& el : aim_data.items()) {
+        std::cout << el.key() << " : " << el.value() << "\n";
+    }
+    std::ofstream o("/tmp/aim_data.json");
+    o << aim_data;
 }
 
 void Trainer::handle_input() {
@@ -261,6 +291,7 @@ void Trainer::handle_input() {
             break;
         case 4:
             aimbot();
+            capture_5_s();
             break;
         default:
             break;

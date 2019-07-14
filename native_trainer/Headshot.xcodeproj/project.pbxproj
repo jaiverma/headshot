@@ -31,6 +31,7 @@
 		2913E1102132ABB1003659C2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2913E1172132ABDA003659C2 /* mem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mem.cpp; sourceTree = "<group>"; };
 		2913E1182132ABDA003659C2 /* mem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mem.hpp; sourceTree = "<group>"; };
+		299F618E22DA200100107254 /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
 		29A564BE214E59470063A33E /* constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
 		29A564BF214E5C810063A33E /* constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = constants.cpp; sourceTree = "<group>"; };
 		29C8B391217B94160096CB60 /* trainer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = trainer.cpp; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 				29C8B392217B94160096CB60 /* trainer.hpp */,
 				29C8B394217B99290096CB60 /* player.cpp */,
 				29C8B395217B99290096CB60 /* player.hpp */,
+				299F618E22DA200100107254 /* json.hpp */,
 			);
 			path = Headshot;
 			sourceTree = "<group>";
