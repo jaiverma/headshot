@@ -17,11 +17,13 @@ function clearMem(addr, len) {
 function _scanHeap(needle, protection) {
     if (typeof protection === 'undefined')
         protection = 'rw-';
-    chunks = Process.enumerateMallocRangesSync(protection);
-    found = Array();
+    // chunks = Process.enumerateMallocRangesSync(protection);
+    var chunks = Process.enumerateRangesSync(protection);
+    // console.log(chunks);
+    var found = Array();
 
     for (var i = 0; i < chunks.length; i++) {
-        t = Memory.scanSync(chunks[i]['base'], chunks[i]['size'], needle);
+        var t = Memory.scanSync(chunks[i]['base'], chunks[i]['size'], needle);
         if (t.length > 0)
             found.extend(t);
     }
@@ -33,14 +35,15 @@ function _scanHeap(needle, protection) {
 // permissions are used
 // returns array chunks containg the search term
 function searchMem(needle, haystack) {
+    // console.log("Hello");
     if (typeof haystack === 'undefined') {
         return _scanHeap(needle);
     }
 
-    found = Array();
+    var found = Array();
 
     for (var i = 0; i < haystack.length; i++) {
-        t = Memory.scanSync(ptr(haystack[i]['address']), haystack[i]['size'], needle);
+        var t = Memory.scanSync(ptr(haystack[i]['address']), haystack[i]['size'], needle);
         if (t.length > 0)
             found.extend(t);
     }
@@ -69,6 +72,7 @@ function ptrSize() {
     return Process.pointerSize;
 }
 
+/*
 // stuff for drawing with opengl
 glColorAddr = Module.findExportByName('OpenGL', 'glColor3f');
 glBeginAddr = Module.findExportByName('OpenGL', 'glBegin');
@@ -303,7 +307,7 @@ function nopIf() {
 
     return true;
 }
-
+*/
 rpc.exports = {
     searchMem: searchMem,
     readMem: readMem,
@@ -311,13 +315,14 @@ rpc.exports = {
     enumerateModules: enumerateModules,
     enumerateRanges: enumerateRanges,
     ptrSize: ptrSize,
-    addRect: addRect,
-    toggleEsp: toggleEsp,
-    testDraw: testDraw,
-    drawEsp: drawEsp,
-    traceLine: traceLine
+    //addRect: addRect,
+    //toggleEsp: toggleEsp,
+    //testDraw: testDraw,
+    //drawEsp: drawEsp,
+    //traceLine: traceLine
 };
-
+/*
 // ObjC.schedule(ObjC.mainQueue, function() {
 //     testDraw();
 // });
+*/

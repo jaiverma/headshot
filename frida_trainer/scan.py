@@ -28,7 +28,7 @@ def format_needle(mem_type, needle):
 
 class Mem:
     def __init__(self, pid):
-        self.session = frida.attach(pid)
+        self.session = frida.get_usb_device().attach(pid)
         self.script = self.session.create_script(script)
         self.script.load()
         self.modules = self.script.exports.enumerate_modules()
