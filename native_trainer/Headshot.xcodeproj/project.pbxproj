@@ -27,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		290E79C023282AAC0084F73B /* utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
 		2913E10D2132ABB1003659C2 /* Headshot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Headshot; sourceTree = BUILT_PRODUCTS_DIR; };
 		2913E1102132ABB1003659C2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2913E1172132ABDA003659C2 /* mem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mem.cpp; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 				29C8B392217B94160096CB60 /* trainer.hpp */,
 				29C8B394217B99290096CB60 /* player.cpp */,
 				29C8B395217B99290096CB60 /* player.hpp */,
+				290E79C023282AAC0084F73B /* utils.hpp */,
 			);
 			path = Headshot;
 			sourceTree = "<group>";

@@ -7,9 +7,12 @@
 //
 
 #include "trainer.hpp"
+#include "utils.hpp"
+
 #include <cmath>
 #include <chrono>
 #include <thread>
+#include <chrono>
 
 Trainer::Trainer(int pid) {
     auto new_pid = static_cast<pid_t>(pid);
@@ -223,6 +226,13 @@ void Trainer::set_ammo(unsigned int ammo) {
 }
 
 void Trainer::aimbot() {
+    auto start = std::chrono::high_resolution_clock::now();
+    double duration;
+    std::vector<float> pitchAngles(50);
+    std::vector<float> yawAngles(50);
+    unsigned int idx = 0;
+    unsigned int cnt = 0;
+    std::tuple<float, float> aim_angles;
     while (true) {
         reinit();
         std::vector<Player> alive_enemies;
@@ -237,9 +247,27 @@ void Trainer::aimbot() {
                 return get_distance(self, p) < get_distance(self, q);
                 
             });
-            auto aim_angles = calc_aim_angles(self, min);
+            aim_angles = calc_aim_angles(self, min);
             self.set_pitch(task, std::get<0>(aim_angles));
             self.set_yaw(task, std::get<1>(aim_angles));
+        } else {
+            aim_angles = std::make_tuple(self.get_pitch(task), self.get_yaw(task));
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        if (duration >= 200) {
+            std::cout << "adding to vector " << idx << std::endl;
+            pitchAngles[idx] = std::get<0>(aim_angles);
+            yawAngles[idx++] = std::get<1>(aim_angles);
+            start = std::chrono::high_resolution_clock::now();
+        }
+        if (idx == 50) {
+            std::cout << "\t\tWriting file\n";
+            auto fileNamePitch = "/tmp/data/pitch_" + std::to_string(cnt) + ".raw";
+            auto fileNameYaw = "/tmp/data/yaw_" + std::to_string(cnt++) + ".raw";
+            saveTensorToFile(pitchAngles, fileNamePitch);
+            saveTensorToFile(yawAngles, fileNameYaw);
+            idx = 0;
         }
     }
 }
